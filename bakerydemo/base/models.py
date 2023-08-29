@@ -11,6 +11,7 @@ from wagtail.admin.panels import (
     MultiFieldPanel,
     PublishingPanel,
 )
+from wagtail.blocks import StructBlock, RichTextBlock, ListBlock
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
 from wagtail.contrib.settings.models import (
     BaseGenericSetting,
@@ -284,7 +285,7 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
         help_text="First featured section for the homepage. Will display up to "
-        "three child items.",
+                  "three child items.",
         verbose_name="Featured section 1",
     )
 
@@ -298,7 +299,7 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
         help_text="Second featured section for the homepage. Will display up to "
-        "three child items.",
+                  "three child items.",
         verbose_name="Featured section 2",
     )
 
@@ -312,7 +313,7 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
         help_text="Third featured section for the homepage. Will display up to "
-        "six child items.",
+                  "six child items.",
         verbose_name="Featured section 3",
     )
 
@@ -460,6 +461,7 @@ class GenericSettings(ClusterableModel, BaseGenericSetting):
     twitter_url = models.URLField(verbose_name="Twitter URL", blank=True)
     github_url = models.URLField(verbose_name="GitHub URL", blank=True)
     organisation_url = models.URLField(verbose_name="Organisation URL", blank=True)
+    logo = models.FileField(upload_to="logos/", blank=True, null=True)
 
     panels = [
         MultiFieldPanel(
@@ -467,6 +469,7 @@ class GenericSettings(ClusterableModel, BaseGenericSetting):
                 FieldPanel("github_url"),
                 FieldPanel("twitter_url"),
                 FieldPanel("organisation_url"),
+                FieldPanel("logo"),
             ],
             "Social settings",
         )
@@ -485,3 +488,25 @@ class SiteSettings(BaseSiteSetting):
     panels = [
         FieldPanel("title_suffix"),
     ]
+
+
+class FooterItemBlock(StructBlock):
+    content = RichTextBlock()
+
+
+class FooterColumnBlock(StructBlock):
+    items = ListBlock(FooterItemBlock(label="Item"))
+
+
+@register_setting
+class FooterSettings(BaseSiteSetting):
+    columns = StreamField([
+        ('row', FooterColumnBlock(min_num=1, label="Column")),
+    ], null=True, blank=True, use_json_field=True)
+
+    panels = [
+        FieldPanel('columns'),
+    ]
+
+    class Meta:
+        verbose_name = "Footer Settings"
