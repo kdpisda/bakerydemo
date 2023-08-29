@@ -1,11 +1,16 @@
 {% load navigation_tags %}
+{% load custom_tags %}
 
 <div class="header clearfix">
     <div class="container">
         <div class="navigation" data-navigation>
             {% with logo=settings.base.GenericSettings.logo%}
                 <a href="/" class="navigation__logo">
-                    <img src="{{ logo.url }}" alt="Logo">
+                    {% if logo %}
+                        <img src="{{ logo.url }}" alt="Logo">
+                    {% else %}
+                        {{ settings.base.SiteSettings.title_suffix }}
+                    {% endif %}
                 </a>
             {% endwith %}
 
@@ -24,7 +29,11 @@
             <nav class="navigation__mobile" data-mobile-navigation hidden>
                 {% with logo=settings.base.GenericSettings.logo%}
                     <a href="/" class="navigation__logo">
-                    <img src="{{ logo.url }}" alt="Logo">
+                        {% if logo %}
+                            <img src="{{ logo.url }}" alt="Logo">
+                        {% else %}
+                            {{ settings.base.SiteSettings.title_suffix }}
+                        {% endif %}
                     </a>
                     <ul class="navigation__items nav-pills">
                         {# main_menu is defined in base/templatetags/navigation_tags.py #}

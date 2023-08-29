@@ -3,9 +3,9 @@ from django import template
 register = template.Library()
 
 
-@register.filter
-def divide(value, arg):
+@register.filter(name='has_logo')
+def has_logo(logo):
     try:
-        return int(value) // int(arg)
-    except (ValueError, ZeroDivisionError):
-        return 0
+        return bool(logo.url)
+    except ValueError:
+        return False

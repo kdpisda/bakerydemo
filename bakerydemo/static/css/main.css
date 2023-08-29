@@ -520,6 +520,7 @@ blockquote .attribute-name {
   flex-direction: row;
   align-items: center;
   padding: 25px 0;
+  height: 4.375rem;
 }
 
 .navigation__mobile {
@@ -727,6 +728,14 @@ blockquote .attribute-name {
   line-height: 1.25;
   margin: 0;
   position: relative;
+  height: 100%;
+}
+
+.navigation__logo img {
+  max-height: 100%;
+  object-fit: contain;
+  height: auto;  /* maintain aspect ratio */
+  width: auto;   /* optional, depending on your design */
 }
 
 @media (min-width: 1150px) {
