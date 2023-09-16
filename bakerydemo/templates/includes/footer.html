@@ -6,19 +6,19 @@
 <footer class="container">
     <div class="row">
         {% with footer_settings=settings.base.FooterSettings %}
-          {% if footer_settings.columns %}
-            {% for column in footer_settings.columns %}
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                {% for item in column.value.items %}
-                  <div class="footer-item mb-2">
-                    {{ item.content|richtext }}
-                  </div>
+            {% if footer_settings.columns %}
+                {% for column in footer_settings.columns %}
+                    <div class="col-xs-{{ col_sizes.xs }} col-sm-{{ col_sizes.sm }} col-md-{{ col_sizes.md }} col-lg-{{ col_sizes.lg }}">
+                        {% for item in column.value.items %}
+                            <div class="footer-item mb-2">
+                                {{ item.content|richtext }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endfor %}
-              </div>
-            {% endfor %}
-          {% else %}
-            <div></div>
-          {% endif %}
+            {% else %}
+                <div></div>
+            {% endif %}
         {% endwith %}
     </div>
     <div class="row">

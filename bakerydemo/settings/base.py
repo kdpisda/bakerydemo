@@ -107,6 +107,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "wagtail.contrib.settings.context_processors.settings",
+                "bakerydemo.base.content_processors.footer_context",
             ],
         },
     },
